@@ -1,0 +1,107 @@
+/* Reset Defaults */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F9FFF7; /* Light background */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo Styling */
+.logo img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    background: white;
+    max-width: 800px;
+    width: 90%;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Left Side: Illustration */
+.illustration {
+    width: 50%;
+    background: #87CEEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right Side: Password Checker */
+.checker {
+    font-weight: 900;
+    color: #1D4200;
+    width: 50%;
+    padding: 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.strength {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* Responsive Design */
+@media (max-width: 700px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+    .illustration, .checker {
+        width: 100%;
+        height: auto;
+    }
+    .illustration img {
+        max-height: 200px;
+    }
+}

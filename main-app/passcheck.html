@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="passcheck.css">
+</head>
+<body>
+
+    <!-- ISTAD Logo -->
+    <div class="logo">
+        <img src="C:\Users\PrymeHat\Desktop\Password Checker\assets\ISTAD Logo-01.png" alt="ISTAD Logo">
+    </div>
+
+    <div class="container">
+        <!-- Left Side: Illustration -->
+        <div class="illustration">
+            <img src="C:\Users\PrymeHat\Desktop\Password Checker\assets\passworkcheck-01.jpg" alt="Security Illustration">
+        </div>
+
+        <!-- Right Side: Password Checker -->
+        <div class="checker">
+            <h2>PASSWORD STRENGTH CHECKER</h2>
+            <input type="text" id="password" placeholder="Type your password..." oninput="checkStrength()">
+            <p class="strength" id="strength"></p>
+        </div>
+    </div>
+
+    <script src="passcheck.js"></script>
+
+    
+</body>
+
+<footer>
+    <p>This app helps users evaluate the strength of their passwords to improve security.<br>Developed by <strong>ISTAD-UITS, KNUST</strong>.</p>
+</footer>
+
+</html>
