@@ -76,6 +76,28 @@ input {
     border-radius: 5px;
 }
 
+.password-input {
+    width: 100%;
+    padding-right: 40px; /* leave space for the icon */
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .toggle-password-btn {
+    position: relative;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
 .strength {
     margin-top: 10px;
     font-size: 18px;

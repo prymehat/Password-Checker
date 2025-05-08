@@ -1,0 +1,18 @@
+ Key Comments:
+checkStrength(): Handles the main logic of checking password strength and updating the UI.
+
+isCommonPassword(): Checks for common weak passwords using a predefined set.
+
+isKeyboardWalk(): Detects common keyboard patterns like "qwerty" or "asdf".
+
+isRepeatingPattern(): Detects if the password has repeating patterns like "abcabc" or "aaaa".
+
+looksLikeDate(): Detects if the password is a simple year or date format.
+
+evaluatePassword(): Evaluates the password for strength based on various rules (length, character types).
+
+formatTime(): Converts estimated cracking time into human-readable format (seconds, minutes, years, etc.).
+
+getAdvice(): Provides advice on what requirements are missing in the password.
+
+updateUI(): Updates the UI with the strength label, estimated crack time, and advice.

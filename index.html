@@ -22,9 +22,15 @@
         <!-- Right Side: Password Checker -->
         <div class="checker">
             <h2>PASSWORD STRENGTH CHECKER</h2>
-            <input type="text" id="password" placeholder="Type your password..." oninput="checkStrength()">
+        
+            <div style="position: relative; display: inline-block; width: 100%;">
+                <input type='' id="password" placeholder="Type your password..." oninput="checkStrength()" style="width: 100%; padding-right: 30px;">
+            </div>
+        
             <p class="strength" id="strength"></p>
         </div>
+        
+        
     </div>
 
     <script src="script.js"></script>

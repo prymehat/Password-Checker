@@ -1,98 +1,156 @@
-function checkStrength() {
-    let password = document.getElementById("password").value;
-    let strengthDisplay = document.getElementById("strength");
+// Main password strength check function
+async function checkStrength() {
+    const password = document.getElementById("password").value;
+    const strengthDisplay = document.getElementById("strength");
 
-    // Common weak passwords
-    let weakPasswords = new Set([
-        "123456", "password", "123456789", "12345", "12345678", "qwerty", "1234567", "111111", "123123", "abc123",
-        "password1", "1234", "iloveyou", "sunshine", "admin", "welcome", "monkey", "football", "charlie", "letmein",
-        "princess", "666666", "qwerty123", "superman", "hello123", "1q2w3e4r", "qazwsx", "123qwe", "dragon", "baseball",
-        "michael", "shadow", "master", "jennifer", "starwars", "cheese", "soccer", "password123", "hockey", "tigger",
-        "george", "trustno1", "whatever", "pokemon", "123abc", "654321", "jordan23", "freedom", "passw0rd", "zaq12wsx",
-        "killer", "buster", "qwertyuiop", "asdfghjkl", "zxcvbnm", "loveme", "batman", "letmeinnow", "corona", "coronavirus",
-        "summer", "daniel", "hunter", "computer", "ashley", "matthew", "bailey", "qwerty1", "thomas", "mickey", "bailey123",
-        "flower", "merlin", "diamond", "love123", "hannah", "fuckyou", "dallas", "pepper", "jessica", "banana", "startrek",
-        "12341234", "robert", "harley", "mustang", "asdfgh", "london", "maggie", "ginger", "cookie", "samantha",
-        "q1w2e3r4t5", "123321", "hotdog", "baby123", "letmein123", "freedom1", "badboy", "charles", "liverpool",
-        "qwert", "test123", "welcome1", "hello", "monkey123", "pass123", "secure123", "securepassword", "batman123",
-        "cheese123", "soccer123", "football123", "123pass", "trustme", "changeme", "123456a", "987654", "87654321",
-        "passw0rd123", "trustme123", "letmeinnow123", "access", "masterkey", "justme", "guessme", "youshallnotpass",
-        "opensesame", "swordfish", "1234567890", "0987654321", "654987", "789654", "admin123", "password321", "password!",
-        "pa$$word", "letmein!", "p@ssw0rd", "p@ssword1", "123456pass", "welcome123", "w3lc0m3", "qwerty!", "1q2w3e",
-        "1q2w3e4r", "zaq12wsxcde", "pass1234", "loveyou123", "just4me", "youcantguess", "tryagain", "wrongpassword",
-        "dontguessme", "youfoundme", "iloveyou1", "god123", "jesus123", "loveislife", "peace123", "money123", "richard",
-        "jackson", "johnny", "maxwell", "rockyou", "shadow123", "letmeinplease", "hannah123", "princess1", "spiderman",
-        "captainamerica", "ironman", "thor123", "hulk123", "password007", "agent47", "blackwidow", "superman123", "kraken",
-        "redbull", "skittles", "oreo123", "starbucks", "dunkin", "coffee123", "fifa123", "playstation", "xbox123",
-        "microsoft", "apple123", "google123", "android123", "samsung", "nokia3310", "blackberry", "huawei123", "tesla123",
-        "elonmusk", "marscolony", "spacex123", "neuralink", "openai123", "skynet", "cyberdyne", "terminator", "matrix123",
-        "neo123", "morpheus", "trinity123", "agent123", "darkknight", "joker123", "harleyquinn", "puddin", "deadpool123",
-        "wolverine123", "stormtrooper", "anakin123", "skywalker", "vader123", "palpatine", "sithlord", "jedimaster",
-        "han123", "leia123", "r2d2", "c3po123", "bb8123", "yoda123", "lightsaber", "forceisstrong", "darth123",
-        "sidious", "kenobi", "ahsoka", "marvel123", "dcuniverse", "jokeriswild", "sanicfast", "mario123", "luigi123",
-        "pikachu", "charizard", "eevee123", "pokeball", "snorlax123", "mewtwo123", "ashketchum", "teamrocket",
-        "gottacatch", "pokemonrules", "masterchief", "halo123", "cortana", "doomguy", "fortnite123", "pubgrocks",
-        "valorant123", "csgo123", "overwatch", "dota123", "league123", "minecraft", "creeper123", "nether123",
-        "diamondpickaxe", "redstone", "villager123", "steve123", "alex123", "herobrine", "noobmaster", "callofduty",
-        "modernwarfare", "blackops", "battlefield", "warzone", "roblox123", "tiktok123", "instagram", "snapchat",
-        "facebook123", "twitter123", "youtube123", "netflix123", "hulu123", "amazon123", "primevideo", "disneyplus",
-        "spotify123", "musicislife", "headphones", "audiophile", "bassboost", "soundwave", "speakers123", "loudmusic",
-        "guitarhero", "rockstar", "mtvrocks", "gaminglife", "streamer123", "twitch123", "youtuber123", "contentcreator",
-        "blogger123", "writerlife", "author123", "journalist123", "freelancer", "developer123", "coderlife", "hacker123",
-        "pentester", "ethicalhacker", "bugbounty", "linux123", "terminal123", "bash123", "root123", "sudo123", "admin!",
-        "godmode", "iamadmin", "rootaccess", "superuser", "hacked123", "malware123", "ransomware", "trojanhorse",
-        "spyware123", "keylogger", "zeroday", "darkweb123", "torbrowser", "onion123", "deepweb", "anonymity", "vpn123",
-        "proxy123", "firewall123", "secureme", "cybersecure", "strongpassword", "2faenabled", "mfaenabled"
-      ]);
-    if (weakPasswords.has(password)) {
-        strengthDisplay.innerHTML = "Weak: Common password<br>Estimated crack time: Instantly";
-        strengthDisplay.style.color = "red";
-        return;
-    }
-
-    if (password === "") {
+    if (!password) {
         strengthDisplay.innerHTML = "";
         return;
     }
 
-    let length = password.length;
-    let hasLower = /[a-z]/.test(password);
-    let hasUpper = /[A-Z]/.test(password);
-    let hasDigit = /\d/.test(password);
-    let hasSpecial = /[@$!%*?&#]/.test(password);
-
-    let score = hasLower + hasUpper + hasDigit + hasSpecial + (length >= 8);
-
-    // Estimate brute-force time
-    let charsetSize = 0;
-    if (hasLower) charsetSize += 26;
-    if (hasUpper) charsetSize += 26;
-    if (hasDigit) charsetSize += 10;
-    if (hasSpecial) charsetSize += 10;
-    let totalCombinations = Math.pow(charsetSize, length);
-    let guessesPerSecond = 10 ** 14;
-    let secondsToCrack = totalCombinations / guessesPerSecond;
-
-    let timeEstimate = "";
-    if (secondsToCrack < 60) timeEstimate = `${secondsToCrack.toFixed(2)} seconds`;
-    else if (secondsToCrack < 3600) timeEstimate = `${(secondsToCrack / 60).toFixed(2)} minutes`;
-    else if (secondsToCrack < 86400) timeEstimate = `${(secondsToCrack / 3600).toFixed(2)} hours`;
-    else if (secondsToCrack < 31536000) timeEstimate = `${(secondsToCrack / 86400).toFixed(2)} days`;
-    else if (secondsToCrack < 3153600000) timeEstimate = `${(secondsToCrack / 31536000).toFixed(2)} years`;
-    else timeEstimate = `${(secondsToCrack / 3153600000).toFixed(2)} centuries`;
-
-    // Set strength and color
-    if (score === 5 && length >= 12) {
-        strengthDisplay.innerHTML = `Very Strong<br>Estimated crack time: ${timeEstimate}`;
-        strengthDisplay.style.color = "green";
-    } else if (score === 5) {
-        strengthDisplay.innerHTML = `Strong<br>Estimated crack time: ${timeEstimate}`;
-        strengthDisplay.style.color = "blue";
-    } else if (score >= 3) {
-        strengthDisplay.innerHTML = `Medium: Consider adding more variety<br>Estimated crack time: ${timeEstimate}`;
-        strengthDisplay.style.color = "orange";
-    } else {
-        strengthDisplay.innerHTML = `Weak: Easy to guess<br>Estimated crack time: ${timeEstimate}`;
-        strengthDisplay.style.color = "red";
+    // Check against external file of common (banned) passwords
+    if (await checkCommonPasswords(password)) {
+        updateUI("Weak: Found in common passwords list", "Instantly", "red", "");
+        return;
     }
+
+    // Check for date-like patterns
+    if (looksLikeDate(password)) {
+        updateUI("Weak: Date-based password", "Instantly", "red", "");
+        return;
+    }
+
+    // Check for keyboard walk patterns (e.g., qwerty, 12345)
+    if (isKeyboardWalk(password)) {
+        updateUI("Weak: Keyboard pattern", "Instantly", "red", "");
+        return;
+    }
+
+    // Check for repeating patterns (e.g., abcabcabc)
+    if (isRepeatingPattern(password)) {
+        updateUI("Weak: Repeating pattern", "Instantly", "red", "");
+        return;
+    }
+
+    // Evaluate strength based on variety and entropy
+    const { score, charsetSize, unmetCriteria } = evaluatePassword(password);
+    const entropy = password.length * Math.log2(charsetSize || 1);
+    const crackTime = formatTime(Math.pow(2, entropy) / 1e14);
+
+    // Determine strength label and color
+    let label, color;
+    if (score === 5 && password.length >= 12) {
+        label = "Very Strong";
+        color = "green";
+    } else if (score === 5) {
+        label = "Strong";
+        color = "blue";
+    } else if (score >= 3) {
+        label = "Medium: Consider adding more variety";
+        color = "orange";
+    } else {
+        label = "Weak: Easy to guess";
+        color = "red";
+    }
+
+    // Build advice string from unmet criteria
+    const advice = unmetCriteria.length > 0
+        ? "Advice: " + unmetCriteria.join(", ")
+        : "";
+
+    // Display results
+    updateUI(label, crackTime, color, advice);
+}
+
+// Compare password to external text file of common passwords
+async function checkCommonPasswords(password) {
+    try {
+        const response = await fetch('common-passwords.txt');
+        if (!response.ok) throw new Error('Could not load password list');
+        const text = await response.text();
+        const passwordList = text.split(/\r?\n/).map(p => p.trim().toLowerCase());
+        return passwordList.includes(password.toLowerCase());
+    } catch (error) {
+        console.error('Error checking common passwords list:', error);
+        return false;
+    }
+}
+
+// Detects date-like strings such as "2023", "12-05-1990"
+function looksLikeDate(pwd) {
+    return /^\d{4}$/.test(pwd) || /^\d{2}[\/\-]\d{2}[\/\-]?\d{2,4}$/.test(pwd);
+}
+
+// Checks for common keyboard walks like "qwerty" or "12345"
+function isKeyboardWalk(pwd) {
+    const patterns = ["qwerty", "asdf", "zxcv", "12345", "09876"];
+    const lowerPwd = pwd.toLowerCase();
+    return patterns.some(seq => lowerPwd.includes(seq));
+}
+
+// Checks for repeating string patterns like "abcabcabc"
+function isRepeatingPattern(pwd) {
+    const repeatRegex = /^(.+)\1+$/;
+    return repeatRegex.test(pwd);
+}
+
+// Evaluates password score based on character type diversity and length
+function evaluatePassword(pwd) {
+    const rules = {
+        lower: /[a-z]/.test(pwd),
+        upper: /[A-Z]/.test(pwd),
+        digit: /\d/.test(pwd),
+        special: /[@$!%*?&#]/.test(pwd)
+    };
+
+    const charsetSizes = { lower: 26, upper: 26, digit: 10, special: 32 };
+    let charsetSize = 0;
+    let score = pwd.length >= 8 ? 1 : 0;
+
+    const unmetCriteria = [];
+    if (pwd.length < 8) unmetCriteria.push("minimum 8 characters");
+    if (!rules.lower) unmetCriteria.push("add lowercase");
+    if (!rules.upper) unmetCriteria.push("add uppercase");
+    if (!rules.digit) unmetCriteria.push("add numbers");
+    if (!rules.special) unmetCriteria.push("add special characters");
+
+    for (let [key, matched] of Object.entries(rules)) {
+        if (matched) {
+            charsetSize += charsetSizes[key];
+            score++;
+        }
+    }
+
+    return { score, charsetSize, unmetCriteria };
+}
+
+// Converts seconds to a human-readable time estimate
+function formatTime(seconds) {
+    if (seconds >= 3.1536e11) return "More than 100 centuries";
+
+    const units = [
+        { label: "centuries", value: 3.1536e9 },
+        { label: "years", value: 3.1536e7 },
+        { label: "days", value: 86400 },
+        { label: "hours", value: 3600 },
+        { label: "minutes", value: 60 },
+        { label: "seconds", value: 1 }
+    ];
+
+    for (let { label, value } of units) {
+        if (seconds >= value) {
+            return `${(seconds / value).toFixed(2)} ${label}`;
+        }
+    }
+
+    return `${seconds.toFixed(2)} seconds`;
+}
+
+// Updates the DOM with password strength feedback
+function updateUI(strengthText, crackTime, color, advice) {
+    const strengthDisplay = document.getElementById("strength");
+    strengthDisplay.innerHTML =
+        `${strengthText}<br>Estimated crack time: ${crackTime}` +
+        (advice ? `<br><span style="font-size: 0.9em; color: gray;"><i>${advice}</i></span>` : "");
+    strengthDisplay.style.color = color;
 }
